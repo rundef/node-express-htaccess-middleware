@@ -1,0 +1,43 @@
+{
+  "name": "htaccess-rewrite-middleware",
+  "version": "1.0.0",
+  "description": "",
+  "main": "lib/htaccess.js",
+  "scripts": {
+    "test": "./node_modules/.bin/_mocha",
+    "lint": "./node_modules/.bin/eslint index.js",
+    "cover": "./node_modules/.bin/istanbul cover --report html node_modules/.bin/_mocha --check-leaks",
+    "travis": "./node_modules/istanbul/lib/cli.js cover ./node_modules/.bin/_mocha",
+    "coveralls": "cat ./coverage/lcov.info | ./node_modules/.bin/coveralls"
+  },
+  "keywords": [
+    "htaccess",
+    "rewrite",
+    "mod_rewrite",
+    "redirect",
+    "redirection",
+    "express"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/rundef/node-htaccess-rewrite-middleware.git"
+  },
+  "author": "Mickael Burguet <www.rundef.com>",
+  "license": "MIT",
+  "engines": {
+    "node": ">= 0.12.0"
+  },
+  "dependencies": {
+    "chalk": "^1.1.3",
+    "lodash": "^4.13.1"
+  },
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "coveralls": "^2.11.9",
+    "eslint": "^2.12.0",
+    "express": "^4.14.0",
+    "istanbul": "^0.4.3",
+    "mocha": "^2.5.3",
+    "supertest": "^1.2.0"
+  }
+}

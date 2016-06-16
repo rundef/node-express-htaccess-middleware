@@ -1,0 +1,5 @@
+RewriteEngine on
+RewriteBase /dir
+
+RewriteRule  ^foo.html$   test.html  [L]
+RewriteRule  ^/foo2.html$   test2.html  [L]
