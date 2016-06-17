@@ -4,7 +4,7 @@ RewriteCond %{HTTP_USER_AGENT} ^Blacklisted-agent1$
 RewriteRule ^source1.html$ /dest1.html [R]
 
 RewriteCond %{HTTP_USER_AGENT} ^Blacklisted-agent1$ [OR,NC]
-RewriteCond %{HTTP_USER_AGENT} ^Blacklisted-agent2$
+RewriteCond %{HTTP_USER_AGENT} ^Blacklisted-agent2$ [NC]
 RewriteRule .* - [F]
 
 RewriteCond %{REQUEST_METHOD} POST

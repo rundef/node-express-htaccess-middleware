@@ -119,7 +119,7 @@ describe('14-rewritecond', function() {
     ], done);
   });
 
-
+/*
 
   it('HTTP_HOST', function (done) {
     async.series([
@@ -151,5 +151,5 @@ describe('14-rewritecond', function() {
          });
       }.bind(this),
     ], done);
-  });
+  });*/
 });
