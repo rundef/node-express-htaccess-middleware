@@ -1,0 +1,5 @@
+RewriteEngine on
+RewriteBase /
+
+RewriteRule ^source1/([0-9]+)/([0-9]+)$ /dest1.php?a=$1&b=$2 [R]
+RewriteRule ^source2/([a-z]+)/([\w]+)$ /dest2.php?a=$1&b=$2&c=$2 [R]

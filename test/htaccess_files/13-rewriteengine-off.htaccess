@@ -1,0 +1,3 @@
+RewriteEngine off
+
+RewriteRule ^source1.html$ /dest1.html [R]

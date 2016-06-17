@@ -1,5 +1,9 @@
 # htaccess-rewrite-middleware
 
+[![npm version](https://badge.fury.io/js/htaccess-rewrite-middleware.svg)](http://badge.fury.io/js/htaccess-rewrite-middleware) 
+[![Travis](https://travis-ci.org/rundef/node-htaccess-rewrite-middleware.svg?branch=master)](https://travis-ci.org/rundef/node-htaccess-rewrite-middleware?branch=master) 
+[![Coverage Status](https://coveralls.io/repos/github/rundef/node-htaccess-rewrite-middleware/badge.svg?branch=master)](https://coveralls.io/github/rundef/node-htaccess-rewrite-middleware?branch=master)
+
 **Work in progress, do not use**
 
 An express middleware that interprets .htaccess redirection rules.
@@ -14,11 +18,11 @@ An express middleware that interprets .htaccess redirection rules.
 var path = require('path');
 
 var express = require('express');
-var htaccessRewrite = require('htaccess-rewrite-middleware');
+var RewriteMiddleware = require('../lib/htaccess');
 
 var app = express();
 
-app.use(htaccessRewrite({
+app.use(RewriteMiddleware({
   verbose: (process.env.ENV_NODE == 'development'),
   file: path.resolve(__dirname, '.htaccess')
 }));
@@ -41,3 +45,7 @@ This is very useful to debug your redirections when developing.
 ### RewriteCond
 
 ### RewriteRule
+
+#### Supported flags
+
+[R=301] or [R=302]

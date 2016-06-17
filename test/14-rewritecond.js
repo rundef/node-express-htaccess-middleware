@@ -1,0 +1,142 @@
+var RewriteMiddleware = require('../lib/htaccess');
+var express = require('./helpers/express');
+
+var expect = require('chai').expect;
+var path = require('path');
+var supertest = require('supertest');
+var async = require('async');
+
+var app = null;
+
+describe('12-rewritebase', function() {
+  before(function (done) {
+    app = express(0, RewriteMiddleware({
+      verbose: false,
+      file: path.resolve(__dirname, 'htaccess_files', '12-rewritebase.htaccess')
+    }));
+    done();
+  });
+
+  after(function (done) {
+    app.close();
+    done();
+  });
+
+
+  it('HTTP_USER_AGENT - OR,NC flags', function (done) {
+    async.series([
+      function(next) {
+        this.request = supertest(app)
+         .get('/source2.html')
+         .set('User-Agent', 'whitelisted-agent1')
+         .end(function (err, res) {
+           expect(res.statusCode).to.not.equal(403);
+
+           next();
+         });
+      }.bind(this),
+
+
+      function(next) {
+        this.request = supertest(app)
+         .get('/source2.html')
+         .set('User-Agent', 'Blacklisted-agent1')
+         .end(function (err, res) {
+           expect(res.statusCode).to.equal(403);
+
+           next();
+         });
+      }.bind(this),
+
+
+      function(next) {
+        this.request = supertest(app)
+         .get('/source2.html')
+         .set('User-Agent', 'Blacklisted-AGENT2')
+         .end(function (err, res) {
+           expect(res.statusCode).to.equal(403);
+
+           next();
+         });
+      }.bind(this),
+    ], done);
+  });
+
+
+
+  it('REQUEST_METHOD/HTTP_REFERER', function (done) {
+    async.series([
+      function(next) {
+        this.request = supertest(app)
+         .get('/test.html')
+         .set('User-Agent', 'whitelisted-agent1')
+         .set('Referer', 'http://www.otherdomain.com/page.html')
+         .end(function (err, res) {
+           expect(res.statusCode).to.not.equal(410);
+
+           next();
+         });
+      }.bind(this),
+
+
+      function(next) {
+        this.request = supertest(app)
+         .post('/test.html')
+         .set('User-Agent', 'whitelisted-agent1')
+         .set('Referer', 'http://www.olddomain.com/page.html')
+         .end(function (err, res) {
+           expect(res.statusCode).to.not.equal(410);
+
+           next();
+         });
+      }.bind(this),
+
+
+      function(next) {
+        this.request = supertest(app)
+         .post('/test.html')
+         .set('User-Agent', 'whitelisted-agent1')
+         .set('Referer', 'http://www.otherdomain.com/page.html')
+         .end(function (err, res) {
+           expect(res.statusCode).to.equal(410);
+
+           next();
+         });
+      }.bind(this),
+    ], done);
+  });
+
+
+
+  it('HTTP_HOST', function (done) {
+    async.series([
+      function(next) {
+        this.request = supertest(app)
+         .get('/test.html')
+         .set('User-Agent', 'whitelisted-agent1')
+         .set('Host', 'www.somedomain.com')
+         .end(function (err, res) {
+           expect(res.statusCode).to.equal(404);
+
+           next();
+         });
+      }.bind(this),
+
+
+      function(next) {
+        this.request = supertest(app)
+         .get('/test.html')
+         .set('User-Agent', 'whitelisted-agent1')
+         .set('Host', 'www.olddomain.com')
+         .end(function (err, res) {
+           expect(res.statusCode).to.equal(301);
+
+           expect(res.header).to.have.property('location');
+           expect(res.header.location).to.equal('http://www.newdomain.com/test.html');
+
+           next();
+         });
+      }.bind(this),
+    ], done);
+  });
+});

@@ -1,0 +1,13 @@
+RewriteEngine on
+
+RewriteCond %{HTTP_USER_AGENT} ^Blacklisted-agent1$ [OR,NC]
+RewriteCond %{HTTP_USER_AGENT} ^Blacklisted-agent2$
+RewriteRule .* - [F]
+
+RewriteCond %{REQUEST_METHOD} POST
+RewriteCond %{HTTP_REFERER} !^http://www.olddomain.com [NC]
+RewriteRule .* - [G]
+
+RewriteCond %{HTTP_HOST} ^www.olddomain.com$ [OR]
+RewriteCond %{HTTP_HOST} ^olddomain.com$
+RewriteRule ^(.*)$ http://www.newdomain.com/$1 [R=301,L]
