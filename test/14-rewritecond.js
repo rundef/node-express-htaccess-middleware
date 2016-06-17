@@ -8,11 +8,11 @@ var async = require('async');
 
 var app = null;
 
-describe('12-rewritebase', function() {
+describe('14-rewritecond', function() {
   before(function (done) {
     app = express(0, RewriteMiddleware({
       verbose: false,
-      file: path.resolve(__dirname, 'htaccess_files', '12-rewritebase.htaccess')
+      file: path.resolve(__dirname, 'htaccess_files', '14-rewritecond.htaccess')
     }));
     done();
   });
@@ -22,6 +22,19 @@ describe('12-rewritebase', function() {
     done();
   });
 
+  it('HTTP_USER_AGENT', function (done) {
+    this.request = supertest(app)
+     .get('/source1.html')
+     .set('User-Agent', 'Blacklisted-agent1')
+     .end(function (err, res) {
+       expect(res.statusCode).to.equal(302);
+
+       expect(res.header).to.have.property('location');
+       expect(res.header.location).to.equal('/dest1.html');
+
+       done();
+     });
+  });
 
   it('HTTP_USER_AGENT - OR,NC flags', function (done) {
     async.series([
