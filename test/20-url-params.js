@@ -8,11 +8,11 @@ var async = require('async');
 
 var app = null;
 
-describe('11-url-params', function() {
+describe('20-url-params', function() {
   before(function (done) {
     app = express(0, RewriteMiddleware({
       verbose: false,
-      file: path.resolve(__dirname, 'htaccess_files', '11-url-params.htaccess')
+      file: path.resolve(__dirname, 'htaccess_files', '20-url-params.htaccess')
     }));
     done();
   });

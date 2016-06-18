@@ -8,11 +8,11 @@ var async = require('async');
 
 var app = null;
 
-describe('14-rewritecond', function() {
+describe('50-rewritecond', function() {
   before(function (done) {
     app = express(0, RewriteMiddleware({
       verbose: false,
-      file: path.resolve(__dirname, 'htaccess_files', '14-rewritecond.htaccess')
+      file: path.resolve(__dirname, 'htaccess_files', '50-rewritecond.htaccess')
     }));
     done();
   });

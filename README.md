@@ -4,8 +4,6 @@
 [![Travis](https://travis-ci.org/rundef/node-htaccess-rewrite-middleware.svg?branch=master)](https://travis-ci.org/rundef/node-htaccess-rewrite-middleware?branch=master) 
 [![Coverage Status](https://coveralls.io/repos/github/rundef/node-htaccess-rewrite-middleware/badge.svg?branch=master)](https://coveralls.io/github/rundef/node-htaccess-rewrite-middleware?branch=master)
 
-**Work in progress, do not use**
-
 An express middleware that interprets .htaccess redirection rules.
 
 ## Installation
@@ -18,7 +16,7 @@ An express middleware that interprets .htaccess redirection rules.
 var path = require('path');
 
 var express = require('express');
-var RewriteMiddleware = require('../lib/htaccess');
+var RewriteMiddleware = require('htaccess-rewrite-middleware');
 
 var app = express();
 
@@ -38,14 +36,36 @@ This is very useful to debug your redirections when developing.
 
 ## Supported directives
 
-### RewriteEngine
+#### RewriteEngine on|off
 
-### RewriteBase
+The `RewriteEngine on` directive enables the rewriting engine.
 
-### RewriteCond
+#### RewriteBase <URL-path>
 
-### RewriteRule
+Sets the base URL for rewrites.
 
-#### Supported flags
+#### RewriteCond <TestVariable> <Pattern> [Flags]
 
-[R=301] or [R=302]
+Defines a condition under which rewriting will take place. The pattern has to be a regular expression. Both the *NC* and *OR* flags are supported.
+
+##### Supported variables
+
+> %{REQUEST_METHOD}
+
+> %{HTTP_USER_AGENT}
+
+> %{HTTP_REFERER}
+
+#### RewriteRule <Pattern> <Substitution> [flags]
+
+Defines rules for the rewriting engine
+
+##### Supported flags
+
+> NC
+
+> R
+
+> F
+
+> G

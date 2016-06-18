@@ -1,0 +1,8 @@
+RewriteEngine on
+RewriteBase /dir
+
+
+RewriteRule source1.html dest1.html [R]
+RewriteRule ^source2.html$ dest2.html [R]
+RewriteRule source3.html$ /folder/dest3.html [R]
+RewriteRule (source4.html) http://www.domain2.com/$1 [R]

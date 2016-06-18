@@ -1,6 +1,0 @@
-RewriteEngine on
-RewriteBase /dir
-
-RewriteRule source1.html /dest1.html [R]
-RewriteRule ^dir/source2.html$ dest2.html [R]
-RewriteRule ^(.*)$ http://www.domain2.com/$1 [R]
