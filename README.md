@@ -30,23 +30,23 @@ app.listen(3000, function () {
 });
 ```
 
-If the *verbose* flag is set, the rules not understood by this module will be shown in your console. The redirections will also be displayed.
+If the *verbose* flag is set, the rules not understood by this module will be shown in the console. The redirections will also be displayed.
 
-This is very useful to debug your redirections when developing.
+This is very useful to debug your redirections when developing your app.
 
 ## Supported directives
 
-#### RewriteEngine on|off
+#### RewriteEngine *on|off*
 
 The `RewriteEngine on` directive enables the rewriting engine.
 
-#### RewriteBase <URL-path>
+#### RewriteBase *URL-path*
 
 Sets the base URL for rewrites.
 
-#### RewriteCond <TestVariable> <Pattern> [Flags]
+#### RewriteCond *TestVariable* *Pattern* [*Flags*]
 
-Defines a condition under which rewriting will take place. The pattern has to be a regular expression. Both the *NC* and *OR* flags are supported.
+Defines a condition under which rewriting will take place. The pattern has to be a regular expression. Both the **NC** and **OR** flags are supported.
 
 ##### Supported variables
 
@@ -56,7 +56,7 @@ Defines a condition under which rewriting will take place. The pattern has to be
 
 > %{HTTP_REFERER}
 
-#### RewriteRule <Pattern> <Substitution> [flags]
+#### RewriteRule *Pattern* *Substitution* [*Flags*]
 
 Defines rules for the rewriting engine
 
@@ -69,3 +69,5 @@ Defines rules for the rewriting engine
 > F
 
 > G
+
+> QSA

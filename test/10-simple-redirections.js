@@ -145,4 +145,32 @@ describe('10-simple-redirections', function() {
        done();
      });
   });
+
+
+  it('RewriteRule source-(.{1}).html /page.php?page=$1 [R]', function (done) {
+    this.request = supertest(app)
+     .get('/source-a.html?a=1')
+     .end(function (err, res) {
+       expect(res.statusCode).to.equal(302);
+
+       expect(res.header).to.have.property('location');
+       expect(res.header.location).to.equal('/page.php?page=a');
+
+       done();
+     });
+  });
+
+
+  it('RewriteRule source-(.{2}).html /page.php?page=$1 [R,QSA]', function (done) {
+    this.request = supertest(app)
+     .get('/source-aa.html?a=1')
+     .end(function (err, res) {
+       expect(res.statusCode).to.equal(302);
+
+       expect(res.header).to.have.property('location');
+       expect(res.header.location).to.equal('/page.php?page=aa&a=1');
+
+       done();
+     });
+  });
 });

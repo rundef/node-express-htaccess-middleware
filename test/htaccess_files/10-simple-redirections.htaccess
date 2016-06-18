@@ -8,4 +8,5 @@ RewriteRule ^/source5.html$ /dest5.html [R]
 RewriteRule source6.html - [F]
 RewriteRule source7.html - [G]
 RewriteRule source8.html /dest8.html [R,NC]
-
+RewriteRule source-(.{1}).html /page.php?page=$1 [R]
+RewriteRule source-(.{2}).html /page.php?page=$1 [R,QSA]
