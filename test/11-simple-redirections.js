@@ -13,7 +13,7 @@ describe('11-simple-redirections', function() {
     express(0, path.resolve(__dirname, 'htaccess_files', '11-simple-redirections.htaccess'), function(err, server, expressInstance) {
       app = server;
 
-      expressInstance.get('dest1.html', function (req, res) {
+      expressInstance.get('/dest1.html', function (req, res) {
         res.send('content of dest1.html');
       });
 
@@ -26,17 +26,6 @@ describe('11-simple-redirections', function() {
     done();
   });
 
-  it('ZZZZ set of rules', function (done) {
-    this.request = supertest(app)
-     .get('/dest1.html')
-     .end(function (err, res) {
-       expect(res.statusCode).to.equal(200);
-
-       expect(res.body).to.equal('content of dest1.html');
-
-       done();
-     });
-  });
 
   it('1st set of rules', function (done) {
     this.request = supertest(app)
@@ -44,7 +33,7 @@ describe('11-simple-redirections', function() {
      .end(function (err, res) {
        expect(res.statusCode).to.equal(200);
 
-       expect(res.body).to.equal('content of dest1.html');
+       expect(res.text).to.equal('content of dest1.html');
 
        done();
      });
@@ -71,7 +60,7 @@ describe('11-simple-redirections', function() {
      .end(function (err, res) {
        expect(res.statusCode).to.equal(200);
 
-       expect(res.body).to.equal('content of dest1.html');
+       expect(res.text).to.equal('content of dest1.html');
 
        done();
      });
