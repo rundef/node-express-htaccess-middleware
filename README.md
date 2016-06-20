@@ -1,32 +1,34 @@
-# htaccess-rewrite-middleware
+# express-htaccess-middleware
 
-[![npm version](https://badge.fury.io/js/htaccess-rewrite-middleware.svg)](http://badge.fury.io/js/htaccess-rewrite-middleware) 
-[![Travis](https://travis-ci.org/rundef/node-htaccess-rewrite-middleware.svg?branch=master)](https://travis-ci.org/rundef/node-htaccess-rewrite-middleware?branch=master) 
-[![Coverage Status](https://coveralls.io/repos/github/rundef/node-htaccess-rewrite-middleware/badge.svg?branch=master)](https://coveralls.io/github/rundef/node-htaccess-rewrite-middleware?branch=master)
+[![npm version](https://badge.fury.io/js/express-htaccess-middleware.svg)](http://badge.fury.io/js/express-htaccess-middleware) 
+[![Travis](https://travis-ci.org/rundef/node-express-htaccess-middleware.svg?branch=master)](https://travis-ci.org/rundef/node-express-htaccess-middleware?branch=master) 
+[![Coverage Status](https://coveralls.io/repos/github/rundef/node-express-htaccess-middleware/badge.svg?branch=master)](https://coveralls.io/github/rundef/node-express-htaccess-middleware?branch=master)
 
-An express middleware that interprets .htaccess redirection rules.
+An express middleware that interprets .htaccess rewrite rules.
 
 ## Installation
 
-> npm i htaccess-rewrite-middleware
+> npm i express-htaccess-middleware
 
 ## Usage
 
 ```javascript
 var path = require('path');
-
 var express = require('express');
-var RewriteMiddleware = require('htaccess-rewrite-middleware');
+var RewriteMiddleware = require('express-htaccess-middleware');
 
-var app = express();
-
-app.use(RewriteMiddleware({
+RewriteMiddleware({
   verbose: (process.env.ENV_NODE == 'development'),
   file: path.resolve(__dirname, '.htaccess')
-}));
+},
+function (err, middleware) {
+  if(err) throw err;
 
-app.listen(3000, function () {
-  console.log('Example app listening on port 3000!');
+  var app = express();
+  app.use(middleware);
+  app.listen(3000, function () {
+    console.log('Example app listening on port 3000!');
+  });
 });
 ```
 
@@ -46,15 +48,21 @@ Sets the base URL for rewrites.
 
 #### RewriteCond *TestVariable* *Pattern* [*Flags*]
 
-Defines a condition under which rewriting will take place. The pattern has to be a regular expression. Both the **NC** and **OR** flags are supported.
+Defines a condition under which rewriting will take place. The pattern has to be a regular expression. 
 
 ##### Supported variables
 
-> %{REQUEST_METHOD}
+- %{REQUEST_METHOD}
 
-> %{HTTP_USER_AGENT}
+- %{HTTP_USER_AGENT}
 
-> %{HTTP_REFERER}
+- %{HTTP_REFERER}
+
+##### Supported flags
+
+- NC
+
+- OR
 
 #### RewriteRule *Pattern* *Substitution* [*Flags*]
 
@@ -62,12 +70,12 @@ Defines rules for the rewriting engine
 
 ##### Supported flags
 
-> NC
+- NC
 
-> R
+- R
 
-> F
+- F
 
-> G
+- G
 
-> QSA
+- QSA

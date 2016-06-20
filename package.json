@@ -1,8 +1,8 @@
 {
-  "name": "htaccess-rewrite-middleware",
-  "version": "1.0.0",
+  "name": "express-htaccess-middleware",
+  "version": "0.1.0",
   "description": "",
-  "main": "lib/htaccess.js",
+  "main": "lib/middleware.js",
   "scripts": {
     "test": "./node_modules/.bin/_mocha",
     "lint": "./node_modules/.bin/eslint index.js",
@@ -20,7 +20,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git://github.com/rundef/node-htaccess-rewrite-middleware.git"
+    "url": "git://github.com/rundef/node-express-htaccess-middleware.git"
   },
   "author": "Mickael Burguet <www.rundef.com>",
   "license": "MIT",

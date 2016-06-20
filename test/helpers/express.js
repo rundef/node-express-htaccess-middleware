@@ -1,11 +1,16 @@
 var express = require('express');
+var RewriteMiddleware = require('../../lib/middleware');
 
-module.exports = function(port, middleware) {
+module.exports = function(port, htaccess_file, cb) {
   var app = express();
 
-  if(middleware) {
+  RewriteMiddleware({
+    verbose: true,
+    file: htaccess_file
+  },
+  function (err, middleware) {
     app.use(middleware);
-  }
-  
-  return app.listen(port);
+
+    cb(null, app.listen(port), app);
+  });
 };

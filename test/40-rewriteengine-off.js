@@ -1,4 +1,4 @@
-var RewriteMiddleware = require('../lib/htaccess');
+var RewriteMiddleware = require('../lib/middleware');
 var express = require('./helpers/express');
 
 var expect = require('chai').expect;
@@ -10,11 +10,10 @@ var app = null;
 
 describe('40-rewriteengine-off', function() {
   before(function (done) {
-    app = express(0, RewriteMiddleware({
-      verbose: false,
-      file: path.resolve(__dirname, 'htaccess_files', '40-rewriteengine-off.htaccess')
-    }));
-    done();
+    express(0, path.resolve(__dirname, 'htaccess_files', '40-rewriteengine-off.htaccess'), function(err, server) {
+      app = server;
+      done();
+    });
   });
 
   after(function (done) {

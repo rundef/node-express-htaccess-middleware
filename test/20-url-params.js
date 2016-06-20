@@ -1,4 +1,4 @@
-var RewriteMiddleware = require('../lib/htaccess');
+var RewriteMiddleware = require('../lib/middleware');
 var express = require('./helpers/express');
 
 var expect = require('chai').expect;
@@ -10,11 +10,10 @@ var app = null;
 
 describe('20-url-params', function() {
   before(function (done) {
-    app = express(0, RewriteMiddleware({
-      verbose: false,
-      file: path.resolve(__dirname, 'htaccess_files', '20-url-params.htaccess')
-    }));
-    done();
+    express(0, path.resolve(__dirname, 'htaccess_files', '20-url-params.htaccess'), function(err, server) {
+      app = server;
+      done();
+    });
   });
 
   after(function (done) {

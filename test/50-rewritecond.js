@@ -1,4 +1,4 @@
-var RewriteMiddleware = require('../lib/htaccess');
+var RewriteMiddleware = require('../lib/middleware');
 var express = require('./helpers/express');
 
 var expect = require('chai').expect;
@@ -10,11 +10,10 @@ var app = null;
 
 describe('50-rewritecond', function() {
   before(function (done) {
-    app = express(0, RewriteMiddleware({
-      verbose: false,
-      file: path.resolve(__dirname, 'htaccess_files', '50-rewritecond.htaccess')
-    }));
-    done();
+    express(0, path.resolve(__dirname, 'htaccess_files', '50-rewritecond.htaccess'), function(err, server) {
+      app = server;
+      done();
+    });
   });
 
   after(function (done) {
@@ -27,7 +26,7 @@ describe('50-rewritecond', function() {
      .get('/source1.html')
      .set('User-Agent', 'Blacklisted-agent1')
      .end(function (err, res) {
-       expect(res.statusCode).to.equal(302);
+       expect(res.statusCode).to.equal(307);
 
        expect(res.header).to.have.property('location');
        expect(res.header.location).to.equal('/dest1.html');

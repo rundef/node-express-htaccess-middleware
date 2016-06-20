@@ -1,0 +1,26 @@
+RewriteEngine on
+RewriteBase /
+
+# 1st set of rules
+RewriteRule source1.html dest1.html
+RewriteRule source1.html dest2.html [L]
+RewriteRule source1.html dest3.html [R]
+# request to source1.html -> don't change the URL, show content of dest3.html
+
+
+# 2nd set of rules
+RewriteRule source2.html destA1.html
+RewriteRule destA1.html destA2.html
+RewriteRule destA2.html destA3.html [R,L]
+# request to source1.html -> redirect to destA3.html
+
+
+# 3rd set of rules
+RewriteRule source3.html source1.html
+# request to source3.html -> don't change the URL, show content of dest3.html (rules are reprocessed from the top)
+
+
+# 4th set of rules
+RewriteRule source4.html source2.html
+# request to source3.html -> redirect to dest3.html (rules are reprocessed from the top)
+
