@@ -14,3 +14,16 @@ RewriteRule .* - [G]
 RewriteCond %{HTTP_HOST} ^www.olddomain.com$ [OR]
 RewriteCond %{HTTP_HOST} ^olddomain.com$
 RewriteRule ^(.*)$ http://www.newdomain.com/$1 [R=301,L]
+
+RewriteCond %{REQUEST_URI} ^/source2.html$
+RewriteRule ^(.*)$ /dest2.html [R]
+
+RewriteCond %{THE_REQUEST} ^/source3.html\?test=1$
+RewriteRule .* /dest3.html [R]
+
+RewriteCond %{ENV:npm_package_main} ^lib/middleware.js$
+RewriteRule ^source4.html$ /dest4.html [R]
+
+RewriteCond %{ENV:non_existing_var} !^lib/middleware.js$
+RewriteRule ^source5.html$ /dest5.html [R]
+

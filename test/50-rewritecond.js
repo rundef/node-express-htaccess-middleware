@@ -21,6 +21,7 @@ describe('50-rewritecond', function() {
     done();
   });
 
+
   it('HTTP_USER_AGENT', function (done) {
     this.request = supertest(app)
      .get('/source1.html')
@@ -35,6 +36,7 @@ describe('50-rewritecond', function() {
      });
   });
 
+
   it('HTTP_USER_AGENT - OR,NC flags', function (done) {
     async.series([
       function(next) {
@@ -48,7 +50,6 @@ describe('50-rewritecond', function() {
          });
       }.bind(this),
 
-
       function(next) {
         this.request = supertest(app)
          .get('/source2.html')
@@ -59,7 +60,6 @@ describe('50-rewritecond', function() {
            next();
          });
       }.bind(this),
-
 
       function(next) {
         this.request = supertest(app)
@@ -73,7 +73,6 @@ describe('50-rewritecond', function() {
       }.bind(this),
     ], done);
   });
-
 
 
   it('REQUEST_METHOD/HTTP_REFERER', function (done) {
@@ -90,7 +89,6 @@ describe('50-rewritecond', function() {
          });
       }.bind(this),
 
-
       function(next) {
         this.request = supertest(app)
          .post('/test.html')
@@ -102,7 +100,6 @@ describe('50-rewritecond', function() {
            next();
          });
       }.bind(this),
-
 
       function(next) {
         this.request = supertest(app)
@@ -118,7 +115,6 @@ describe('50-rewritecond', function() {
     ], done);
   });
 
-/*
 
   it('HTTP_HOST', function (done) {
     async.series([
@@ -133,7 +129,6 @@ describe('50-rewritecond', function() {
            next();
          });
       }.bind(this),
-
 
       function(next) {
         this.request = supertest(app)
@@ -150,5 +145,79 @@ describe('50-rewritecond', function() {
          });
       }.bind(this),
     ], done);
-  });*/
+  });
+
+
+  it('REQUEST_URI', function (done) {
+    this.request = supertest(app)
+     .get('/source2.html')
+     .end(function (err, res) {
+       expect(res.statusCode).to.equal(302);
+
+       expect(res.header).to.have.property('location');
+       expect(res.header.location).to.equal('/dest2.html');
+
+       done();
+     });
+  });
+
+
+  it('THE_REQUEST', function (done) {
+    async.series([
+      function(next) {
+        this.request = supertest(app)
+         .get('/source3.html')
+         .end(function (err, res) {
+           expect(res.statusCode).to.equal(404);
+
+           next();
+         });
+      }.bind(this),
+
+      function(next) {
+        this.request = supertest(app)
+         .get('/source3.html')
+         .query('test=1')
+         .end(function (err, res) {
+           expect(res.statusCode).to.equal(302);
+
+           expect(res.header).to.have.property('location');
+           expect(res.header.location).to.equal('/dest3.html?test=1');
+
+           next();
+         });
+      }.bind(this),
+    ], done);
+  });
+
+
+  it('ENV', function (done) {
+    async.series([
+      function(next) {
+        this.request = supertest(app)
+         .get('/source4.html')
+         .end(function (err, res) {
+           expect(res.statusCode).to.equal(302);
+
+           expect(res.header).to.have.property('location');
+           expect(res.header.location).to.equal('/dest4.html');
+
+           next();
+         });
+      }.bind(this),
+
+      function(next) {
+        this.request = supertest(app)
+         .get('/source5.html')
+         .end(function (err, res) {
+           expect(res.statusCode).to.equal(302);
+
+           expect(res.header).to.have.property('location');
+           expect(res.header.location).to.equal('/dest5.html');
+
+           next();
+         });
+      }.bind(this),
+    ], done);
+  });
 });

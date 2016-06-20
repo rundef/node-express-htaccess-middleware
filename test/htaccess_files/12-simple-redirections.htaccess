@@ -1,0 +1,13 @@
+RewriteEngine on
+RewriteBase /
+
+# 1st set of rules
+RewriteRule source1.html destA1.html [S]
+RewriteRule destA1.html destA2.html [R]
+RewriteRule destA1.html destA3.html [R]
+
+# 2nd set of rules
+RewriteRule source2.html destB1.html [S=2]
+RewriteRule destB1.html destB2.html [R]
+RewriteRule destB1.html destB3.html [R]
+RewriteRule destB3.html source1.html

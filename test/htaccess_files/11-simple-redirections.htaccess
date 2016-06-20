@@ -22,5 +22,10 @@ RewriteRule source3.html source1.html
 
 # 4th set of rules
 RewriteRule source4.html source2.html
-# request to source3.html -> redirect to dest3.html (rules are reprocessed from the top)
+# request to source3.html -> redirect to destA3.html (rules are reprocessed from the top)
 
+
+# 5th set of rules
+RewriteRule source5.html source2.html
+RewriteRule source2.html destB1.html [R]
+# request to source5.html -> to test if Apache redirects us to destA3.html or destB1.html

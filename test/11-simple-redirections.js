@@ -79,4 +79,18 @@ describe('11-simple-redirections', function() {
        done();
      });
   });
+
+
+  it('5th set of rules', function (done) {
+    this.request = supertest(app)
+     .get('/source5.html')
+     .end(function (err, res) {
+       expect(res.statusCode).to.equal(302);
+
+       expect(res.header).to.have.property('location');
+       expect(res.header.location).to.equal('/nopass.html');
+
+       done();
+     });
+  });
 });
