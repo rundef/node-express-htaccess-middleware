@@ -88,7 +88,7 @@ describe('11-simple-redirections', function() {
        expect(res.statusCode).to.equal(302);
 
        expect(res.header).to.have.property('location');
-       expect(res.header.location).to.equal('/nopass.html');
+       expect(res.header.location).to.equal('/destB1.html');
 
        done();
      });

@@ -18,8 +18,9 @@ var express = require('express');
 var RewriteMiddleware = require('express-htaccess-middleware');
 
 RewriteMiddleware({
+  file: path.resolve(__dirname, '.htaccess'),
   verbose: (process.env.ENV_NODE == 'development'),
-  file: path.resolve(__dirname, '.htaccess')
+  watch: (process.env.ENV_NODE == 'development'),
 },
 function (err, middleware) {
   if(err) throw err;
@@ -32,9 +33,11 @@ function (err, middleware) {
 });
 ```
 
-If the *verbose* flag is set, the rules not understood by this module will be shown in the console. The redirections will also be displayed.
+If the **verbose** option is set to **true**, the rules not understood by this module will be shown in the console. The redirections will also be displayed.
 
 This is very useful to debug your redirections when developing your app.
+
+If the **watch** option is set to **true**, the rewrite rules will be automatically reloaded whenever the htaccess file is modified.
 
 ## Supported directives
 
@@ -54,9 +57,19 @@ Defines a condition under which rewriting will take place. The pattern has to be
 
 - %{REQUEST_METHOD}
 
+- %{REQUEST_URI}
+
+- %{THE_REQUEST}
+
+- %{HTTP_HOST}
+
 - %{HTTP_USER_AGENT}
 
 - %{HTTP_REFERER}
+
+- %{QUERY_STRING}
+
+- %{ENV:*...*}
 
 ##### Supported flags
 
@@ -74,8 +87,14 @@ Defines rules for the rewriting engine
 
 - R
 
+- N
+
 - F
 
 - G
 
 - QSA
+
+- QSD
+
+- S=x

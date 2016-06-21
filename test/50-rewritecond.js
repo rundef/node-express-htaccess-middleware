@@ -220,4 +220,65 @@ describe('50-rewritecond', function() {
       }.bind(this),
     ], done);
   });
+
+
+  it('QUERY_STRING', function (done) {
+    async.series([
+      function(next) {
+        this.request = supertest(app)
+         .get('/page1')
+         .query('var=val')
+         .end(function (err, res) {
+           expect(res.statusCode).to.equal(302);
+
+           expect(res.header).to.have.property('location');
+           expect(res.header.location).to.equal('/page2?var=val');
+
+           next();
+         });
+      }.bind(this),
+
+
+      function(next) {
+        this.request = supertest(app)
+         .get('/path')
+         .query('var=val')
+         .end(function (err, res) {
+           expect(res.statusCode).to.equal(302);
+
+           expect(res.header).to.have.property('location');
+           expect(res.header.location).to.equal('/path/var/val');
+
+           next();
+         });
+      }.bind(this),
+
+
+      function(next) {
+        this.request = supertest(app)
+         .get('/source6.html')
+         .query('var=val&a=1')
+         .end(function (err, res) {
+           expect(res.statusCode).to.equal(404);
+
+           next();
+         });
+      }.bind(this),
+
+
+      function(next) {
+        this.request = supertest(app)
+         .get('/source6.html')
+         .query('var=val')
+         .end(function (err, res) {
+           expect(res.statusCode).to.equal(302);
+
+           expect(res.header).to.have.property('location');
+           expect(res.header.location).to.equal('dest6.html');
+
+           next();
+         });
+      }.bind(this),
+    ], done);
+  });
 });

@@ -2,7 +2,7 @@ RewriteEngine on
 RewriteBase /
 
 # 1st set of rules
-RewriteRule source1.html destA1.html [S]
+RewriteRule source1.html destA1.html [S=1]
 RewriteRule destA1.html destA2.html [R]
 RewriteRule destA1.html destA3.html [R]
 
@@ -10,4 +10,9 @@ RewriteRule destA1.html destA3.html [R]
 RewriteRule source2.html destB1.html [S=2]
 RewriteRule destB1.html destB2.html [R]
 RewriteRule destB1.html destB3.html [R]
-RewriteRule destB3.html source1.html
+RewriteRule destB1.html source1.html
+
+
+# 3rd set of rules
+RewriteRule source3.html destC1.html [N]
+RewriteRule destC1.html destC2.html [R]

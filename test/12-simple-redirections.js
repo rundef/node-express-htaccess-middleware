@@ -30,7 +30,35 @@ describe('12-simple-redirections', function() {
        expect(res.statusCode).to.equal(302);
 
        expect(res.header).to.have.property('location');
-       expect(res.header.location).to.equal('/nopass.html');
+       expect(res.header.location).to.equal('/destA3.html');
+
+       done();
+     });
+  });
+
+
+  it('2nd set of rules', function (done) {
+    this.request = supertest(app)
+     .get('/source2.html')
+     .end(function (err, res) {
+       expect(res.statusCode).to.equal(302);
+
+       expect(res.header).to.have.property('location');
+       expect(res.header.location).to.equal('/destA3.html');
+
+       done();
+     });
+  });
+
+
+  it('3rd set of rules', function (done) {
+    this.request = supertest(app)
+     .get('/source3.html')
+     .end(function (err, res) {
+       expect(res.statusCode).to.equal(302);
+
+       expect(res.header).to.have.property('location');
+       expect(res.header.location).to.equal('/destC2.html');
 
        done();
      });

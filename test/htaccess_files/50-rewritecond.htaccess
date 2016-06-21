@@ -27,3 +27,11 @@ RewriteRule ^source4.html$ /dest4.html [R]
 RewriteCond %{ENV:non_existing_var} !^lib/middleware.js$
 RewriteRule ^source5.html$ /dest5.html [R]
 
+RewriteCond %{QUERY_STRING} val
+RewriteRule ^page1 page2 [R]
+
+RewriteCond %{QUERY_STRING} ^(\w+)=(\w+)$
+RewriteRule ^path /path/%1/%2 [R,QSD]
+
+RewriteCond %{QUERY_STRING} =var=val
+RewriteRule source6.html dest6.html [R,QSD]
