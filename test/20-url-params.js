@@ -10,7 +10,8 @@ var app = null;
 
 describe('20-url-params', function() {
   before(function (done) {
-    express(0, path.resolve(__dirname, 'htaccess_files', '20-url-params.htaccess'), function(err, server) {
+    var file = path.resolve(__dirname, 'htaccess_files', '20-url-params.htaccess');
+    express(0, {file: file}, function(err, server) {
       app = server;
       done();
     });

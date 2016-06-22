@@ -10,7 +10,8 @@ var app = null;
 
 describe('40-rewriteengine-off', function() {
   before(function (done) {
-    express(0, path.resolve(__dirname, 'htaccess_files', '40-rewriteengine-off.htaccess'), function(err, server) {
+    var file = path.resolve(__dirname, 'htaccess_files', '40-rewriteengine-off.htaccess');
+    express(0, {file: file}, function(err, server) {
       app = server;
       done();
     });

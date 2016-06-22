@@ -1,16 +1,23 @@
+var _ = require('lodash');
 var express = require('express');
 var RewriteMiddleware = require('../../lib/middleware');
 
-module.exports = function(port, htaccess_file, cb) {
+module.exports = function(port, options, cb) {
   var app = express();
 
-  RewriteMiddleware({
-    verbose: true,
-    file: htaccess_file
-  },
-  function (err, middleware) {
-    app.use(middleware);
+  var RewriteOptions = _.assign({
+    verbose: true
+  }, options);
 
-    cb(null, app.listen(port), app);
-  });
+  var server = app.listen(port);
+
+  if (RewriteOptions.watch) {
+    RewriteOptions.server = server;
+  }
+
+  app.use(RewriteMiddleware(RewriteOptions));
+
+  setTimeout(function() {
+    cb(null, server, app);
+  }, 100);
 };

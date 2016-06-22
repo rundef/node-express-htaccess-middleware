@@ -16,20 +16,16 @@ An express middleware that interprets .htaccess rewrite rules.
 var path = require('path');
 var express = require('express');
 var RewriteMiddleware = require('express-htaccess-middleware');
-
-RewriteMiddleware({
+var RewriteOptions = {
   file: path.resolve(__dirname, '.htaccess'),
   verbose: (process.env.ENV_NODE == 'development'),
   watch: (process.env.ENV_NODE == 'development'),
-},
-function (err, middleware) {
-  if(err) throw err;
+};
 
-  var app = express();
-  app.use(middleware);
-  app.listen(3000, function () {
-    console.log('Example app listening on port 3000!');
-  });
+var app = express();
+app.use(RewriteMiddleware(RewriteOptions));
+app.listen(3000, function () {
+  console.log('Example app listening on port 3000!');
 });
 ```
 
@@ -88,6 +84,8 @@ Defines rules for the rewriting engine
 - R
 
 - N
+
+- L
 
 - F
 

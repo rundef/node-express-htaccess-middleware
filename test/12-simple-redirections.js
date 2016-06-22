@@ -10,7 +10,8 @@ var app = null;
 
 describe('12-simple-redirections', function() {
   before(function (done) {
-    express(0, path.resolve(__dirname, 'htaccess_files', '12-simple-redirections.htaccess'), function(err, server, expressInstance) {
+    var file = path.resolve(__dirname, 'htaccess_files', '12-simple-redirections.htaccess');
+    express(0, {file: file}, function(err, server, expressInstance) {
       app = server;
 
       done();
