@@ -4,7 +4,7 @@
 [![Travis](https://travis-ci.org/rundef/node-express-htaccess-middleware.svg?branch=master)](https://travis-ci.org/rundef/node-express-htaccess-middleware?branch=master) 
 [![Coverage Status](https://coveralls.io/repos/github/rundef/node-express-htaccess-middleware/badge.svg?branch=master)](https://coveralls.io/github/rundef/node-express-htaccess-middleware?branch=master)
 
-An express middleware that interprets .htaccess rewrite rules.
+An express middleware that interprets **.htaccess** rewrite rules.
 
 ## Installation
 

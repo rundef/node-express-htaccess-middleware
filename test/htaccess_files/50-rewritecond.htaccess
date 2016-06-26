@@ -34,4 +34,7 @@ RewriteCond %{QUERY_STRING} ^(\w+)=(\w+)$
 RewriteRule ^path /path/%1/%2 [R,QSD]
 
 RewriteCond %{QUERY_STRING} =var=val
-RewriteRule source6.html dest6.html [R,QSD]
+RewriteRule source6\.html dest6.html [R,QSD]
+
+RewriteCond "%{REQUEST_URI}" "=/source7.html"
+RewriteRule '^(.*)$' '/dest7.html'

@@ -11,8 +11,13 @@ var app = null;
 describe('50-rewritecond', function() {
   before(function (done) {
     var file = path.resolve(__dirname, 'htaccess_files', '50-rewritecond.htaccess');
-    express(0, {file: file}, function(err, server) {
+    express(0, {file: file}, function(err, server, expressInstance) {
       app = server;
+
+      expressInstance.get('/dest7.html', function (req, res) {
+        res.send('content of dest7.html');
+      });
+
       done();
     });
   });
@@ -275,11 +280,24 @@ describe('50-rewritecond', function() {
            expect(res.statusCode).to.equal(302);
 
            expect(res.header).to.have.property('location');
-           expect(res.header.location).to.equal('dest6.html');
+           expect(res.header.location).to.equal('/dest6.html');
 
            next();
          });
       }.bind(this),
     ], done);
+  });
+
+
+  it('with quotes', function (done) {
+    this.request = supertest(app)
+     .get('/source7.html')
+     .end(function (err, res) {
+       expect(res.statusCode).to.equal(200);
+
+       expect(res.text).to.equal('content of dest7.html');
+
+       done();
+     });
   });
 });

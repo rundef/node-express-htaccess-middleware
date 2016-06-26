@@ -15,7 +15,6 @@ describe('02-watch-option', function() {
     fs.writeFileSync(file, "RewriteEngine on\nRewriteBase /\n");
     express(0, {file: file, watch: true}, function(err, server, expressInstance) {
       app = server;
-      expressInstance.on('close', function () { console.log('CLOSE'); });
       done();
     });
   });
@@ -23,7 +22,8 @@ describe('02-watch-option', function() {
   after(function (done) {
     fs.unlinkSync(file);
     app.close();
-    done();
+
+    setTimeout(done, 100);
   });
 
   it('GET /source1.html should return a 404', function (done) {
