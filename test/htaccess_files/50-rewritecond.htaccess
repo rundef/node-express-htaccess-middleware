@@ -1,4 +1,5 @@
 RewriteEngine on
+RewriteBase /
 
 RewriteCond %{HTTP_USER_AGENT} ^Blacklisted-agent1$
 RewriteRule ^source1.html$ /dest1.html [R=307]

@@ -173,4 +173,18 @@ describe('10-simple-redirections', function() {
        done();
      });
   });
+
+
+  it('RewriteRule from2\\.html /path/\\%1/\\%2/\\$1+\\$2 [R]', function (done) {
+    this.request = supertest(app)
+     .get('/from2.html')
+     .end(function (err, res) {
+       expect(res.statusCode).to.equal(302);
+
+       expect(res.header).to.have.property('location');
+       expect(res.header.location).to.equal('/path/%251/%252/$1+$2');
+
+       done();
+     });
+  });
 });

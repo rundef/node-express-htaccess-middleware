@@ -10,3 +10,7 @@ RewriteRule source7.html - [G]
 RewriteRule source8.html /dest8.html [R,NC]
 RewriteRule source-(.{1}).html /page.php?page=$1 [R]
 RewriteRule source-(.{2}).html /page.php?page=$1 [R,QSA]
+
+
+RewriteRule from2\.html /path/\%1/\%2/\$1+\$2 [R]
+# /path/%251/%252/$1+$2

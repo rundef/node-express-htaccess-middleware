@@ -1,0 +1,5 @@
+RewriteEngine on
+
+RewriteRule index1\.html index2.html [R]
+RewriteRule index5\.html http://google.com [R]
+RewriteRule index6\.html /index7.html [R]

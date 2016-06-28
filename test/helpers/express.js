@@ -6,10 +6,10 @@ module.exports = function(port, options, cb) {
   var app = express();
 
   var RewriteOptions = _.assign({
-    verbose: true
+    verbose: false
   }, options);
 
-  var server = app.listen(port);
+  var server = app.listen(port, '127.0.0.1');
 
   if (RewriteOptions.watch) {
     RewriteOptions.server = server;
